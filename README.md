@@ -1,4 +1,3 @@
-
 **Mehul Mahaveer Nahar**  
 **Company**: Code Tech IT Solutions  
 **Employee ID**: CT08DS7233  
@@ -7,6 +6,9 @@
 
 ---
 ## Project: Password Strength Checker
+![Screenshot (29)](https://github.com/user-attachments/assets/7a0895e1-bd6e-40ed-91d2-29657647a976)
+
+
 
 ## Project Overview
 
