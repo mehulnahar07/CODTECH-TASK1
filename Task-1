@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .weak {
+            color: red;
+        }
+        .moderate {
+            color: orange;
+        }
+        .strong {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Password Strength Checker</h2>
+    <input type="password" id="password" placeholder="Enter your password" oninput="checkPasswordStrength()">
+    <div id="feedback" class="feedback"></div>
+</div>
+
+<script>
+function checkPasswordStrength() {
+    const password = document.getElementById('password').value;
+    const feedback = document.getElementById('feedback');
+    let score = 0;
+    let feedbackMessages = [];
+
+    // Length check
+    if (password.length < 8) {
+        feedbackMessages.push("Password is too short, must be at least 8 characters long.");
+    } else if (password.length <= 12) {
+        score += 1;
+        feedbackMessages.push("Password length is moderate.");
+    } else {
+        score += 2;
+        feedbackMessages.push("Good password length.");
+    }
+
+    // Check for lowercase, uppercase, digits, and special characters
+    if (/[a-z]/.test(password)) {
+        score += 1;
+        feedbackMessages.push("Password contains lowercase letters.");
+    } else {
+        feedbackMessages.push("Add some lowercase letters.");
+    }
+
+    if (/[A-Z]/.test(password)) {
+        score += 1;
+        feedbackMessages.push("Password contains uppercase letters.");
+    } else {
+        feedbackMessages.push("Add some uppercase letters.");
+    }
+
+    if (/\d/.test(password)) {
+        score += 1;
+        feedbackMessages.push("Password contains numbers.");
+    } else {
+        feedbackMessages.push("Add some numbers.");
+    }
+
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        score += 1;
+        feedbackMessages.push("Password contains special characters.");
+    } else {
+        feedbackMessages.push("Add some special characters (e.g., !, @, #).");
+    }
+
+    // Uniqueness (repetition check)
+    const uniqueCharacters = new Set(password);
+    if (uniqueCharacters.size < password.length * 0.7) {
+        feedbackMessages.push("Password contains too many repeated characters.");
+    } else {
+        score += 1;
+        feedbackMessages.push("Password has a good level of uniqueness.");
+    }
+
+    // Provide feedback based on the score
+    let strengthClass = "";
+    if (score <= 3) {
+        feedbackMessages.unshift("Weak password.");
+        strengthClass = "weak";
+    } else if (score == 4) {
+        feedbackMessages.unshift("Moderate password.");
+        strengthClass = "moderate";
+    } else {
+        feedbackMessages.unshift("Strong password.");
+        strengthClass = "strong";
+    }
+
+    // Display feedback
+    feedback.innerHTML = feedbackMessages.join('<br>');
+    feedback.className = "feedback " + strengthClass;
+}
+</script>
+
+</body>
+</html>
